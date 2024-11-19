@@ -1,5 +1,6 @@
 from functools import wraps
 from flask import request, jsonify
+import os
 
 # Secret key for token validation - should be stored securely in environment variables
 API_SECRET_KEY = os.getenv('API_SECRET_KEY', 'Ollama')  # Replace with secure key in production
