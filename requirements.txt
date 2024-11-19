@@ -1,3 +1,6 @@
+meta-ai-api
+flask[async]
+gunicorn
 requests==2.31.0
 requests-html==0.10.0
 lxml_html_clean==0.1.1
