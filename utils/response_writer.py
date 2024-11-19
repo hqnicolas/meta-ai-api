@@ -1,5 +1,6 @@
 import threading
 from difflib import SequenceMatcher
+import re
 
 class ResponseWriter:
     def __init__(self):
@@ -7,6 +8,12 @@ class ResponseWriter:
         self._lock = threading.Lock()
 
     def normalize_text(self, text: str) -> str:
+        text = re.sub(r'/n`([abc123])', r'/n"\1', text)
+        text = re.sub(r'([abc123])` ', r'\1" ', text)
+        text = re.sub(r'`([abc123])', r'"\1', text)
+        text = re.sub(r'([abc123])`', r'\1"', text)
+        text = re.sub(r'`([abc123])', r'"\1', text)
+        text = re.sub(r'/n``', r'/n```', text)
         text = text.replace('\\"', '\\\" ')
         text = text.replace(':\"', ':\" ')
         text = text.replace('""""', '###')
@@ -34,3 +41,4 @@ class ResponseWriter:
                     
             self.previous_message = current_message
             return delta
+
