@@ -1,3 +1,95 @@
+# MetaAI API for Open Web UI Integration
+
+This repository contains a Flask application that provides an OpenAI-compatible API interface for interacting with Meta AI models.
+It supports both Open Web UI and continue.dev integrations.
+
+## Features
+
+- OpenAI-compatible API endpoints
+- Streaming and non-streaming responses
+- Authentication with API keys and Bearer tokens
+- CORS support for web integration
+- Compatible with continue.dev and Open Web UI
+- Support for chat completions and regular completions
+
+## Endpoints
+
+- `/v1/models`: Lists available AI models
+- `/v1/chat/completions`: OpenAI-compatible chat completion endpoint
+- `/api/chat`: Direct chat endpoint
+- `/api/generate`: Text generation endpoint
+- `/auth/token`: Token generation endpoint
+
+## Installation
+
+1. Clone the repository
+2. Install dependencies with Docker Compose:
+```bash
+docker compose build
+```
+3. Run the application:
+```bash
+docker compose up
+```
+
+## Usage
+
+### Open Web UI Integration
+
+Base Configuration:
+- API URL: `http://0.0.0.0:9090`
+- Default API Key: `Ollama`
+- Models endpoint: `http://0.0.0.0:9090/models`
+
+### continue.dev Integration
+
+Add the following configuration to your continue.dev settings:
+
+```json
+{
+  "models": [
+    {
+      "title": "API:llama3.2",
+      "model": "llama3.2:70b-text-fp16",
+      "completionOptions": {},
+      "useLegacyCompletionsEndpoint": false,
+      "apiBase": "http://0.0.0.0:9090/v1",
+      "provider": "openai",
+      "apiKey": "Ollama",
+      "request_options": {
+        "headers": {
+          "X-API-Key": "Ollama"
+        }
+      }
+    }
+  ]
+}
+```
+
+## Environment Variables
+
+- `API_SECRET_KEY`: Secret key for token generation (default: "Ollama")
+- `API_KEY`: API key for authentication (default: "Ollama")
+
+## Development
+
+The application is built with Flask and includes:
+- Token-based authentication
+- Request streaming support
+- Error handling and logging
+- Thread pool executor for handling concurrent requests
+- Response normalization and formatting
+
+## Security
+
+- Supports both Bearer token and API key authentication
+- Token verification using HMAC-SHA256
+- Configurable token expiration (default: 1 hour)
+
+## Contributing
+
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
 # MetaAI API Wrapper
 
 MetaAI is a Python library designed to interact with Meta's AI APIs that run in the backend of https://www.meta.ai/. It encapsulates the complexities of authentication and communication with the APIs, providing a straightforward interface for sending queries and receiving responses.
@@ -241,7 +333,3 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ```
-
-# Meta Copyright:
-
-For more information related to the license tied to Llama, please visit https://www.llama.com/llama3/license/
